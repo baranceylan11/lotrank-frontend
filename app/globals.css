@@ -107,6 +107,13 @@ body{background:#9bafbe}.wrap{width:calc(100% - 28px)}
 .bizIntro h2,.feature b{color:#132237}.bizIntro p{color:#53667a}.feature small{color:#68788a}.locked{color:#5e6f80;background:#dce5ebd8;border:1px solid #bfccd5}.locked button{color:#132237;background:#edf2f5;border-color:#91a0ad}
 .footer{background:#b2c0ca;color:#2d4154;border-top:1px solid #ffffff70}
 
+/* Visibility correction confirmed from the live 23:10 capture. */
+.heroCarArt{left:28%;width:42%;height:270px;opacity:.96;mix-blend-mode:screen}
+.heroCarArt img{filter:saturate(.86) contrast(1.22) brightness(1.16)}
+.heroCarArt:after{background:linear-gradient(180deg,transparent 58%,#0614268f 100%),linear-gradient(90deg,#0614267a,transparent 30% 72%,#06142692)}
+.heroGrid:after{z-index:4;right:20%;top:16px;width:250px;height:250px;opacity:.24;mix-blend-mode:screen;-webkit-mask-image:radial-gradient(circle,#000 52%,transparent 79%);mask-image:radial-gradient(circle,#000 52%,transparent 79%)}
+.heroGrid .darkCard>*{position:relative;z-index:5}
+
 @media(max-width:1180px){.heroGrid:after{right:4%;opacity:.12}.heroCarArt{left:37%;width:43%;opacity:.62}}
 
 @media(max-width:760px){
@@ -123,4 +130,6 @@ body{background:#9bafbe}.wrap{width:calc(100% - 28px)}
 .business{color:#132237;background:linear-gradient(145deg,#edf1f5f7,#f5f6f8ed) padding-box,linear-gradient(90deg,#d8b94f82,#ab99e074) border-box}
 .bizIntro h2,.feature b{color:#132237}.bizIntro p{color:#53667a}.feature{color:#132237}.feature small{color:#68788a}.locked{color:#5e6f80;background:#dce5ebd8}.locked button{color:#132237}
 .footer{color:#2d4154;background:#b6c3cc}
+.heroCarArt{left:31%;width:88%;height:180px;opacity:.84}.heroCarArt img{filter:saturate(.82) contrast(1.18) brightness(1.05)}
+.heroGrid:after{z-index:4;right:-8%;top:232px;width:230px;height:230px;opacity:.18}
 }
