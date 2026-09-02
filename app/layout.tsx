@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "LotRank | Akıllı Araç İhale Analizi",
-  description: "Fransa’daki araç ihalelerini karşılaştırın, fırsatları ve riskleri görün.",
+  title: "LotRank | Analyse intelligente des enchères automobiles",
+  description: "Comparez les enchères automobiles en France, repérez les opportunités et comprenez les risques.",
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",
   },
+  other: { "codex-preview": "development" },
 };
 
 export default function RootLayout({
@@ -16,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="tr">
+    <html lang="fr">
       <body className="antialiased">{children}</body>
     </html>
   );
