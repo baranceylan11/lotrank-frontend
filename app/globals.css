@@ -23,8 +23,8 @@
 /* Exact locked homepage color flow from the approved reference. */
 .hero{background:radial-gradient(circle at 48% 38%,#0d3151 0,#071d31 32%,#031222 74%)}
 .heroGrid{padding-bottom:18px}
-.heroCarArt{top:-2px;left:31%;width:34%;height:232px;opacity:.8;mix-blend-mode:screen}
-.heroCarArt img{object-fit:cover;object-position:center 55%;filter:saturate(.55) contrast(1.12) brightness(.66)}
+.heroCarArt{top:-2px;left:31%;width:34%;height:232px;opacity:.66;mix-blend-mode:screen}
+.heroCarArt img{object-fit:contain;object-position:center;filter:saturate(.58) contrast(1.1) brightness(.48)}
 .auctions{color:#fff;background:linear-gradient(180deg,#061b2e 0%,#183a56 42%,#57758d 100%);padding-top:13px;padding-bottom:20px}
 .title small,.title>a{color:#c1ccd6}
 .filters button{color:#dce4eb;background:#102d4688;border-color:#ffffff22}
