@@ -19,3 +19,24 @@
 .heroCarArt img{width:100%;height:100%;object-fit:cover;object-position:center 58%;filter:saturate(.65) contrast(1.08) brightness(.78)}
 @media(max-width:1180px){.heroCarArt{left:38%;width:42%;opacity:.55}}
 @media(max-width:760px){.heroCarArt{top:0;left:36%;width:74%;height:150px;opacity:.32}.intro h1,.intro>p{max-width:92%}}
+
+/* Exact locked homepage color flow from the approved reference. */
+.hero{background:radial-gradient(circle at 48% 38%,#0d3151 0,#071d31 32%,#031222 74%)}
+.heroGrid{padding-bottom:18px}
+.heroCarArt{top:-2px;left:31%;width:34%;height:232px;opacity:.8;mix-blend-mode:screen}
+.heroCarArt img{object-fit:cover;object-position:center 55%;filter:saturate(.55) contrast(1.12) brightness(.66)}
+.auctions{color:#fff;background:linear-gradient(180deg,#061b2e 0%,#183a56 42%,#57758d 100%);padding-top:13px;padding-bottom:20px}
+.title small,.title>a{color:#c1ccd6}
+.filters button{color:#dce4eb;background:#102d4688;border-color:#ffffff22}
+.filters .sel{color:#a2df7e;background:#183d55;border-color:#6fb950}
+.car{color:#111d2c;border:1px solid #ffffff1f;box-shadow:0 8px 22px #00101e35}
+.lower{margin-top:0;padding-bottom:0;background:linear-gradient(180deg,#57758d 0%,#7590a5 48%,#9bafbe 100%)}
+.stack{gap:6px}
+.soft{box-shadow:none;background:linear-gradient(90deg,#0a2946cc,#173c59a8 55%,#244b68a0) padding-box,linear-gradient(90deg,#73a7c355,#cab65866,#ffffff3b) border-box}
+.pulse{grid-template-columns:1.25fr repeat(5,.78fr) 1.55fr}
+.business{grid-template-columns:1.45fr repeat(4,1fr) 1.25fr;background:linear-gradient(90deg,#314e72a8,#55738aa1 55%,#68869aa1) padding-box,linear-gradient(90deg,#d4af3f7a,#a8b9c755,#ffffff69) border-box}
+.sponsor{background:linear-gradient(90deg,#3657769e,#58768ca1 55%,#6c879a91) padding-box,linear-gradient(90deg,#d4af3f7a,#ffffff4d,#72bc5f85) border-box}
+.footer{background:#9bafbe;color:#eef3f6;border-top:1px solid #ffffff31}
+@media(max-width:1180px){.pulse{grid-template-columns:1.2fr repeat(4,.8fr) 1.4fr}.pulse .stat:nth-of-type(6){display:none}.business{grid-template-columns:1.35fr repeat(3,1fr) 1.1fr}.business .feature:nth-of-type(5){display:none}}
+@media(max-width:760px){.auctions{background:linear-gradient(180deg,#071d31 0%,#294b65 52%,#617d93 100%)}.lower{background:linear-gradient(180deg,#617d93,#9bafbe)}.pulse{grid-template-columns:1fr 1fr}.pulse .stat:nth-of-type(n){display:flex}.heroCarArt{left:42%;width:64%;height:145px;opacity:.38}.business .feature:nth-of-type(n){display:flex}}
+.actions .lang{display:flex;align-items:center;gap:5px;color:#fff}.actions .lang select{appearance:none;border:0;outline:0;background:transparent;color:#fff;font-size:14px;cursor:pointer}.actions .lang select option{color:#132237;background:#fff}.actions .lang svg:last-child{width:12px}.analysis{box-shadow:0 10px 30px #1c344912}.analysis header>span{font-size:17px}
