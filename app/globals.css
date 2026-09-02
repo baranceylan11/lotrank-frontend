@@ -83,3 +83,44 @@ body{background:#9bafbe}.wrap{width:calc(100% - 28px)}
 .footer{background:#9bafbe;color:#f2f6f8}.footer>div{display:grid;grid-template-columns:1fr 1fr;gap:14px;text-align:center;padding:16px 0;font-size:12px}
 }
 @media(max-width:360px){.wrap{width:calc(100% - 22px)}.intro h1{font-size:28px}.search{grid-template-columns:minmax(0,1fr) 92px}.search .green{font-size:12px;padding:0 8px}.market>div{min-height:68px;padding:9px}.market>div span{font-size:11px}.footer>div{grid-template-columns:1fr}}
+
+/* FINAL LOCK - approved homepage reference, French product copy, Matrix-green data accent. */
+.hero{background:radial-gradient(circle at 49% 42%,#103652 0,#071d31 38%,#031222 78%)}
+.heroGrid{min-height:272px;padding-top:20px;padding-bottom:18px}
+.heroCarArt{top:-8px;left:31%;width:35%;height:250px;opacity:.78;mix-blend-mode:screen}
+.heroCarArt img{object-fit:contain;object-position:center 54%;filter:saturate(.7) contrast(1.13) brightness(.72)}
+.heroCarArt:after{background:linear-gradient(180deg,#06142600,#061426b5 96%),linear-gradient(90deg,#0614267d,transparent 42%,#061426a8)}
+.heroGrid:after{right:20.5%;top:20px;width:230px;height:230px;opacity:.16;background-size:cover;mix-blend-mode:screen;-webkit-mask-image:radial-gradient(circle,#000 48%,transparent 76%);mask-image:radial-gradient(circle,#000 48%,transparent 76%)}
+.darkCard{background:linear-gradient(145deg,#102e477f,#06182ce8);border-color:#ffffff17;box-shadow:0 12px 30px #00101f22}
+.heroGrid .darkCard{height:238px}
+.auctions{padding:14px 0 20px;background:linear-gradient(180deg,#0a2136 0%,#183851 28%,#526e84 69%,#8099ab 100%)}
+.title b{color:#f6f9fb}.title small,.title>a{color:#cad5de}
+.cars{gap:20px}.car{color:#132237;background:#edf2f5;border:1px solid #ffffff4a;box-shadow:0 8px 22px #00101e35}.carBody h3,.carBody h3 b{color:#132237}.carBody p,.meta{color:#526579}
+.lower{margin-top:0;padding:0 0 10px;background:linear-gradient(180deg,#8099ab 0%,#9eb1bf 38%,#b2c0ca 100%)}
+.stack{gap:7px}
+.soft{box-shadow:0 7px 19px #17334818}
+.pulse{color:#fff;background:linear-gradient(90deg,#163b59f2,#315977e8) padding-box,linear-gradient(90deg,#79afc85c,#8bc56c68,#ffffff55) border-box}
+.pulseName small,.pulse .stat small{color:#c9d4dc}.pulse .stat b{color:#fff}
+.sponsor{color:#102238;background:linear-gradient(90deg,#e2e9eef8,#f1f4f6ed 55%,#dbe5eaf2) padding-box,linear-gradient(90deg,#ffffffaa,#a9bcc988,#6fba5d80) border-box}
+.sponsor small{color:#687a8b}.sponsor p,.sponsor p>b{color:#132237}.sponsor p span{color:#5c6f81}.sponsor aside{color:#263a4e}.sponsor>button{color:#132237;background:#edf3f6;border-color:#67b346}
+.business{color:#132237;background:linear-gradient(90deg,#edf1f5f8,#f5f6f8ed 54%,#dfe7edf2) padding-box,linear-gradient(90deg,#d8b94f82,#ab99e074,#ffffffaa) border-box}
+.bizIntro h2,.feature b{color:#132237}.bizIntro p{color:#53667a}.feature small{color:#68788a}.locked{color:#5e6f80;background:#dce5ebd8;border:1px solid #bfccd5}.locked button{color:#132237;background:#edf2f5;border-color:#91a0ad}
+.footer{background:#b2c0ca;color:#2d4154;border-top:1px solid #ffffff70}
+
+@media(max-width:1180px){.heroGrid:after{right:4%;opacity:.12}.heroCarArt{left:37%;width:43%;opacity:.62}}
+
+@media(max-width:760px){
+.hero{background:radial-gradient(circle at 75% 18%,#16405e 0,#071d31 48%,#031222 100%)}
+.heroGrid{padding:22px 0 16px}.heroCarArt{top:2px;left:36%;width:78%;height:168px;opacity:.68}.heroCarArt img{filter:saturate(.72) contrast(1.16) brightness(.88)}
+.heroGrid:after{right:-19%;top:202px;width:250px;height:250px;opacity:.11}
+.intro h1{font-size:31px;line-height:1.14}.intro>p{font-size:16px;line-height:1.48}
+.heroGrid .darkCard{height:auto;min-height:0}.market{background:linear-gradient(145deg,#153852ed,#07192df5)}
+.auctions{padding:16px 0 20px;background:linear-gradient(180deg,#0a2136 0%,#294b65 48%,#7893a7 100%)}
+.car{background:#edf2f5}.lower{background:linear-gradient(180deg,#7893a7 0%,#a5b6c2 62%,#b6c3cc 100%)}
+.pulse{color:#fff;background:linear-gradient(145deg,#153b59ed,#315b78df) padding-box,linear-gradient(90deg,#79afc85c,#8bc56c68) border-box}
+.sponsor{color:#132237;background:linear-gradient(145deg,#e4ebeff7,#f3f5f7ed) padding-box,linear-gradient(90deg,#ffffffaa,#6fba5d80) border-box}
+.sponsor p,.sponsor p>b{color:#132237}.sponsor p span{color:#5c6f81}.sponsor>button{color:#132237;background:#edf3f6}
+.business{color:#132237;background:linear-gradient(145deg,#edf1f5f7,#f5f6f8ed) padding-box,linear-gradient(90deg,#d8b94f82,#ab99e074) border-box}
+.bizIntro h2,.feature b{color:#132237}.bizIntro p{color:#53667a}.feature{color:#132237}.feature small{color:#68788a}.locked{color:#5e6f80;background:#dce5ebd8}.locked button{color:#132237}
+.footer{color:#2d4154;background:#b6c3cc}
+}
