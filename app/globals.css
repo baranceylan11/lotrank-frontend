@@ -48,3 +48,7 @@
 .liveBox footer{margin-top:8px}
 @media(max-width:1280px){.links{gap:20px;margin-left:34px}.links a:nth-last-child(-n+2){display:none}.heroGrid{grid-template-columns:minmax(470px,1.55fr) minmax(235px,.72fr) minmax(235px,.76fr)}.actions button{padding-inline:14px}}
 @media(max-width:1180px){.heroGrid .darkCard{height:auto;min-height:238px}}
+.heroGrowth{position:absolute;z-index:0;left:28%;top:3px;width:39%;height:225px;opacity:.16;pointer-events:none;filter:drop-shadow(0 0 8px #70bd4f42)}
+.heroGrowth svg{width:100%;height:100%;overflow:visible}
+@media(max-width:1180px){.heroGrowth{left:31%;width:45%;opacity:.12}}
+@media(max-width:760px){.heroGrowth{left:34%;top:2px;width:68%;height:135px;opacity:.09}}
