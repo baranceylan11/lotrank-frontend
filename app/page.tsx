@@ -1,0 +1,26 @@
+"use client";
+import Link from "next/link";
+import { ArrowRight, BarChart3, Bell, CarFront, ChevronDown, Crown, Euro, Gauge, Globe2, MapPin, Search, ShieldCheck, Star, Timer, TrendingUp, Truck } from "lucide-react";
+import { useMemo, useState } from "react";
+import { vehicles } from "@/lib/vehicles";
+
+export default function Home(){
+ const [brand,setBrand]=useState("Tümü"); const [query,setQuery]=useState("");
+ const shown=useMemo(()=>vehicles.filter(v=>(brand==="Tümü"||v.brand===brand)&&`${v.brand} ${v.model}`.toLowerCase().includes(query.toLowerCase())),[brand,query]);
+ return <main>
+  <section className="hero">
+   <nav className="nav wrap"><Link className="logo" href="/"><BarChart3/>LotRank</Link><div className="links"><a className="active">Ana Sayfa</a><a href="#auctions">İhaleler</a><a>Takip Listem</a><a>Raporlar <small>Business</small></a><a>Kaynaklar</a><a>Nasıl Çalışır?</a></div><div className="actions"><button className="lang"><Globe2/>TR<ChevronDown/></button><button className="ghost">Giriş Yap</button><button className="green">Üye Ol</button></div></nav>
+   <div className="heroGrid wrap">
+    <div className="intro"><h1>Fransa’daki en iyi araç fırsatlarını <b>LotRank</b> ile keşfedin.</h1><p>Yapay zekâ destekli analizimizle doğru fiyatı görün, akıllı teklif verin.</p><div className="search"><label><CarFront/><input placeholder="Marka / Model" value={query} onChange={e=>setQuery(e.target.value)}/></label><button><Euro/>Maks. Fiyat<ChevronDown/></button><button><MapPin/>Lokasyon<ChevronDown/></button><button className="green"><Search/>Ara</button></div><div className="popular"><span>Popüler:</span>{["BMW","Mercedes","Audi","Peugeot"].map(x=><button key={x} onClick={()=>setBrand(x)}>{x}</button>)}<button onClick={()=>setBrand("Tümü")}>Tümünü Gör <ArrowRight/></button></div></div>
+    <div className="darkCard market"><h3>GÜNLÜK PİYASA ÖZETİ</h3>{[["Yeni İhaleler (Bugün)","38"],["Biten İhaleler (Bugün)","21"],["Ort. LotRank Skoru","74"],["En Yüksek Skor","93"],["İzlenen Kaynak","12"],["Aktif İhale","156"]].map(([a,b],i)=><div key={a}><span>{a}</span><b className={i===3?"hi":""}>{b}</b><TrendingUp/></div>)}</div>
+    <div className="darkCard liveBox"><header>CANLI İHALELER <b>● CANLI</b></header>{vehicles.slice(0,3).map(v=><Link href={`/vehicle/${v.id}`} key={v.id}><i>{v.brand[0]}</i><span>{v.brand} {v.model}<small>★</small></span><strong>{v.price}<small>{v.time}</small></strong></Link>)}<footer>Tüm canlı ihaleler <ArrowRight/></footer></div>
+   </div>
+  </section>
+  <section className="auctions" id="auctions"><div className="wrap"><div className="title"><span><Star/><b>ÖNE ÇIKAN İHALELER<small>Yapay zekâ analiziyle en iyi fırsatlar</small></b></span><a>Tüm ihaleleri gör <ArrowRight/></a></div><div className="filters">{["Tümü","BMW","Mercedes","Audi","Peugeot","Renault"].map(x=><button className={brand===x?"sel":""} onClick={()=>setBrand(x)} key={x}>{x}</button>)}</div><div className="cars">{shown.map(v=><Link className="car" href={`/vehicle/${v.id}`} key={v.id}><div className="photo"><img src={v.image} alt={`${v.brand} ${v.model}`}/><em>LotRank {v.score}</em><span>● CANLI <small>{v.time}</small></span></div><div className="carBody"><h3>{v.brand} {v.model}<b>{v.price}</b></h3><p>{v.year} · {v.km} · Dizel · Otomatik</p><div className="meta"><span><MapPin/>{v.place}</span><span>Başlangıç: {v.start}</span></div><div className="trend"><i/><i/><i/><i/><i/><b>+{v.gain}%<small>Son 10dk</small></b></div></div></Link>)}</div></div></section>
+  <section className="lower"><div className="wrap stack">
+   <div className="soft pulse"><div className="pulseName"><Gauge/><span><b>MARKET PULSE</b><small>Canlı piyasa verileri</small></span></div>{[["38","Yeni İhale"],["21","Biten İhale"],["156","Aktif İhale"],["12","İzlenen Kaynak"]].map(([a,b])=><div className="stat" key={b}><Bell/><span><b>{a}</b><small>{b}</small></span></div>)}<div className="bars">{[30,64,45,80,52,72,38,85,50,70,43,90,62].map((h,i)=><i key={i} style={{height:`${h}%`}}/>)}</div></div>
+   <div className="soft sponsor"><div><Truck/><span><small>SPONSORLU HİZMET</small><b>LotRank İş Ortağı</b></span></div><p><b>Aracınızı güvenle taşıyın</b><span>Fransa genelinde sigortalı taşıma · LotRank kullanıcılarına özel teklif</span></p><aside><span><ShieldCheck/>Sigortalı</span><span><Euro/>Şeffaf Fiyat</span><span><Timer/>Hızlı Teslimat</span></aside><button>Fiyat Hesapla <ArrowRight/></button></div>
+   <div className="soft business"><div className="bizIntro"><h2><Crown className="heartbeat"/>LotRank Business <small>PRO</small></h2><p>Piyasa istihbaratı ile bir adım önde olun. Detaylı analiz ve raporlarla daha akıllı kararlar alın.</p><button>Business’a Geç</button></div>{[["Detaylı Piyasa Raporları","Marka ve bölge analizleri"],["Teklif Davranış Analizi","Son dakika hareketleri"],["LotRank Doğruluk Raporu","Tahmin performansı"]].map(([a,b])=><div className="feature" key={a}><BarChart3 className="turn"/><b>{a}</b><small>{b}</small></div>)}<div className="locked"><Crown/><span>Bu veriler Business üyelerine özeldir.</span><button>Detayları İncele <ArrowRight/></button></div></div>
+  </div></section><footer className="footer"><div className="wrap"><span>12+ Güvenilir Kaynak</span><span>7/24 Otomatik Takip</span><span>Yapay Zekâ Destekli Analiz</span><span>%95+ Tahmin Başarı Hedefi</span></div></footer>
+ </main>
+}
