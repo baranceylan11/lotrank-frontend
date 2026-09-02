@@ -40,3 +40,11 @@
 @media(max-width:1180px){.pulse{grid-template-columns:1.2fr repeat(4,.8fr) 1.4fr}.pulse .stat:nth-of-type(6){display:none}.business{grid-template-columns:1.35fr repeat(3,1fr) 1.1fr}.business .feature:nth-of-type(5){display:none}}
 @media(max-width:760px){.auctions{background:linear-gradient(180deg,#071d31 0%,#294b65 52%,#617d93 100%)}.lower{background:linear-gradient(180deg,#617d93,#9bafbe)}.pulse{grid-template-columns:1fr 1fr}.pulse .stat:nth-of-type(n){display:flex}.heroCarArt{left:42%;width:64%;height:145px;opacity:.38}.business .feature:nth-of-type(n){display:flex}}
 .actions .lang{display:flex;align-items:center;gap:5px;color:#fff}.actions .lang select{appearance:none;border:0;outline:0;background:transparent;color:#fff;font-size:14px;cursor:pointer}.actions .lang select option{color:#132237;background:#fff}.actions .lang svg:last-child{width:12px}.analysis{box-shadow:0 10px 30px #1c344912}.analysis header>span{font-size:17px}
+
+/* Keep the two right-hand panels compact, as in the approved design. */
+.heroGrid .darkCard{align-self:center;height:238px}
+.market>div{margin:7px 0}
+.liveBox>a{margin:12px 0}
+.liveBox footer{margin-top:8px}
+@media(max-width:1280px){.links{gap:20px;margin-left:34px}.links a:nth-last-child(-n+2){display:none}.heroGrid{grid-template-columns:minmax(470px,1.55fr) minmax(235px,.72fr) minmax(235px,.76fr)}.actions button{padding-inline:14px}}
+@media(max-width:1180px){.heroGrid .darkCard{height:auto;min-height:238px}}
