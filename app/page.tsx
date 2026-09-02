@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowRight, BarChart3, Bell, CarFront, ChevronDown, Crown, Euro, Gauge, Globe2, MapPin, Search, ShieldCheck, Star, Timer, TrendingUp, Truck } from "lucide-react";
 import { useMemo, useState } from "react";
-import { vehicles } from "@/lib/vehicles";
+import { useAuctionVehicles } from "@/hooks/use-auction-vehicles";
 
 type Lang = "fr" | "en" | "zh";
 const copy = {
@@ -15,9 +15,10 @@ const copy = {
 
 export default function Home(){
   const router=useRouter();
+  const {vehicles}=useAuctionVehicles();
   const [lang,setLang]=useState<Lang>("fr"); const t=copy[lang];
   const [brand,setBrand]=useState("Tous"); const [query,setQuery]=useState("");
-  const shown=useMemo(()=>vehicles.filter(v=>(brand==="Tous"||v.brand===brand)&&`${v.brand} ${v.model}`.toLowerCase().includes(query.toLowerCase())),[brand,query]);
+  const shown=useMemo(()=>vehicles.filter(v=>(brand==="Tous"||v.brand===brand)&&`${v.brand} ${v.model}`.toLowerCase().includes(query.toLowerCase())),[brand,query,vehicles]);
   const detail=(id:string)=>`/vehicle/${id}?lang=${lang}`;
   return <main>
     <section className="hero">
