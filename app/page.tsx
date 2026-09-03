@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { ArrowRight, BarChart3, Bell, CarFront, ChevronDown, Crown, Euro, Gauge, Globe2, MapPin, Search, ShieldCheck, Star, Timer, TrendingUp, Truck } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useAuctionVehicles } from "@/hooks/use-auction-vehicles";
+import { VEHICLE_PLACEHOLDER_IMAGE, hasVehicleScore } from "@/lib/vehicles";
 
 type Lang = "fr" | "en" | "zh";
 const copy = {
@@ -13,12 +14,19 @@ const copy = {
   zh:{home:"首页",auctions:"拍卖",watch:"关注列表",reports:"报告",sources:"数据源",how:"工作原理",login:"登录",signup:"注册",headline:"使用 LotRank 发现法国最具价值的汽车机会",sub:"通过人工智能分析判断合理价格，做出更明智的竞价。",model:"品牌 / 型号",max:"最高价格",location:"地点",search:"搜索",popular:"热门：",all:"查看全部",daily:"每日市场摘要",newToday:"今日新拍卖",ended:"今日结束",average:"LotRank 平均分",highest:"最高评分",tracked:"跟踪数据源",active:"进行中拍卖",live:"实时拍卖",featured:"精选拍卖",featuredSub:"人工智能分析出的优质机会",allAuctions:"查看全部拍卖",pulse:"实时市场数据",newAuction:"新拍卖",endedAuction:"已结束",bidMoves:"出价动态",sponsored:"赞助服务",partner:"LotRank 合作伙伴",transport:"安全运输您的车辆",transportSub:"法国境内保险运输 · LotRank 用户专享",insured:"运输保险",transparent:"透明价格",fast:"快速交付",quote:"计算价格",businessText:"通过市场情报、详细分析和专业报告保持领先。",businessGo:"升级 Business",marketReports:"市场报告",marketReportsSub:"品牌和地区分析",bidAnalysis:"竞价行为分析",bidAnalysisSub:"最后时刻动态",accuracy:"准确率报告",accuracySub:"预测表现",custom:"筛选与跟踪",customSub:"保存您的筛选条件",proOnly:"这些数据仅供 Business 会员使用。",details:"查看详情",reliable:"12+ 可靠数据源",automatic:"全天候自动跟踪",ai:"人工智能分析",target:"95%+ 准确率目标",start:"起拍价",last:"最近10分钟",fuel:"柴油",gear:"自动挡"}
 } as const;
 
+const dataStateCopy = {
+  fr:{loading:"Chargement des enchères…",empty:"Aucune enchère active pour le moment.",error:"Les enchères sont temporairement indisponibles.",noMatch:"Aucun véhicule ne correspond à votre recherche."},
+  en:{loading:"Loading auctions…",empty:"There are no active auctions right now.",error:"Auctions are temporarily unavailable.",noMatch:"No vehicles match your search."},
+  zh:{loading:"正在加载拍卖…",empty:"目前没有进行中的拍卖。",error:"拍卖数据暂时不可用。",noMatch:"没有符合搜索条件的车辆。"},
+} as const;
+
 export default function Home(){
   const router=useRouter();
-  const {vehicles}=useAuctionVehicles();
+  const {vehicles,mode}=useAuctionVehicles();
   const [lang,setLang]=useState<Lang>("fr"); const t=copy[lang];
   const [brand,setBrand]=useState("Tous"); const [query,setQuery]=useState("");
   const shown=useMemo(()=>vehicles.filter(v=>(brand==="Tous"||v.brand===brand)&&`${v.brand} ${v.model}`.toLowerCase().includes(query.toLowerCase())),[brand,query,vehicles]);
+  const stateText=mode==="loading"?dataStateCopy[lang].loading:mode==="error"?dataStateCopy[lang].error:mode==="empty"?dataStateCopy[lang].empty:dataStateCopy[lang].noMatch;
   const detail=(id:string)=>`/vehicle/${id}?lang=${lang}`;
   return <main>
     <section className="hero">
@@ -27,10 +35,10 @@ export default function Home(){
         <div className="intro"><h1>{t.headline} <b>LotRank</b>.</h1><p>{t.sub}</p><div className="search"><label><CarFront/><input aria-label={t.model} placeholder={t.model} value={query} onChange={e=>setQuery(e.target.value)} onKeyDown={e=>{if(e.key==="Enter")router.push(`/search?lang=${lang}&q=${encodeURIComponent(query)}`)}}/></label><button><Euro/>{t.max}<ChevronDown/></button><button><MapPin/>{t.location}<ChevronDown/></button><button className="green" onClick={()=>router.push(`/search?lang=${lang}&q=${encodeURIComponent(query)}`)}><Search/>{t.search}</button></div><div className="popular"><span>{t.popular}</span>{["BMW","Mercedes","Audi","Peugeot"].map(x=><button key={x} onClick={()=>setBrand(x)}>{x}</button>)}<button onClick={()=>router.push(`/auctions?lang=${lang}`)}>{t.all} <ArrowRight/></button></div></div>
         <div className="heroCarArt" aria-hidden="true"><img src="/hero-car-motif.png" alt=""/></div>
         <div className="darkCard market"><h3>{t.daily}</h3>{[[t.newToday,"38"],[t.ended,"21"],[t.average,"74"],[t.highest,"93"],[t.tracked,"12"],[t.active,"156"]].map(([a,b],i)=><div key={a}><span>{a}</span><b className={i===3?"hi":""}>{b}</b><TrendingUp/></div>)}</div>
-        <div className="darkCard liveBox"><header>{t.live} <b>● LIVE</b></header>{vehicles.slice(0,3).map(v=><Link href={detail(v.id)} key={v.id}><i>{v.brand[0]}</i><span>{v.brand} {v.model}<small>★</small></span><strong>{v.price}<small>{v.time}</small></strong></Link>)}<footer>{t.allAuctions} <ArrowRight/></footer></div>
+        <div className="darkCard liveBox"><header>{t.live} <b>● LIVE</b></header>{vehicles.slice(0,3).map(v=><Link href={detail(v.id)} key={v.id}><i>{v.brand[0] || "—"}</i><span>{v.brand} {v.model}<small>★</small></span><strong>{v.price}{v.time&&<small>{v.time}</small>}</strong></Link>)}{vehicles.length===0&&<p>{stateText}</p>}<footer>{t.allAuctions} <ArrowRight/></footer></div>
       </div>
     </section>
-    <section className="auctions" id="auctions"><div className="wrap"><div className="title"><span><Star/><b>{t.featured}<small>{t.featuredSub}</small></b></span><a>{t.allAuctions} <ArrowRight/></a></div><div className="filters">{["Tous","BMW","Mercedes","Audi","Peugeot","Renault"].map(x=><button className={brand===x?"sel":""} onClick={()=>setBrand(x)} key={x}>{x==="Tous"?t.all:x}</button>)}</div><div className="cars">{shown.map(v=><Link className="car" href={detail(v.id)} key={v.id}><div className="photo"><img src={v.image} alt={`${v.brand} ${v.model}`}/><em>LotRank {v.score}</em><span>● LIVE <small>{v.time}</small></span></div><div className="carBody"><h3>{v.brand} {v.model}<b>{v.price}</b></h3><p>{v.year} · {v.km} · {t.fuel} · {t.gear}</p><div className="meta"><span><MapPin/>{v.place}</span><span>{t.start}: {v.start}</span></div><div className="trend"><i/><i/><i/><i/><i/><b>+{v.gain}%<small>{t.last}</small></b></div></div></Link>)}</div></div></section>
+    <section className="auctions" id="auctions"><div className="wrap"><div className="title"><span><Star/><b>{t.featured}<small>{t.featuredSub}</small></b></span><a>{t.allAuctions} <ArrowRight/></a></div><div className="filters">{["Tous","BMW","Mercedes","Audi","Peugeot","Renault"].map(x=><button className={brand===x?"sel":""} onClick={()=>setBrand(x)} key={x}>{x==="Tous"?t.all:x}</button>)}</div><div className="cars">{shown.map(v=><Link className="car" href={detail(v.id)} key={v.id}><div className="photo"><img src={v.image} alt={`${v.brand} ${v.model}`} onError={event=>{event.currentTarget.onerror=null;event.currentTarget.src=VEHICLE_PLACEHOLDER_IMAGE}}/>{hasVehicleScore(v.score)&&<em>LotRank {v.score}</em>}<span>● LIVE {v.time&&<small>{v.time}</small>}</span></div><div className="carBody"><h3>{v.brand} {v.model}<b>{v.price}</b></h3><p>{[v.year,v.km!=="—"?v.km:null,v.fuel,v.transmission].filter(Boolean).join(" · ")||"—"}</p><div className="meta"><span><MapPin/>{v.place}</span><span>{t.start}: {v.start}</span></div>{v.gain!==null&&<div className="trend"><i/><i/><i/><i/><i/><b>{v.gain>0?"+":""}{v.gain}%<small>{t.last}</small></b></div>}</div></Link>)}</div>{shown.length===0&&<div className="emptyState"><CarFront/><h2>{stateText}</h2></div>}</div></section>
     <section className="lower"><div className="wrap stack">
       <div className="soft pulse"><div className="pulseName"><Gauge/><span><b>MARKET PULSE</b><small>{t.pulse}</small></span></div>{[["38",t.newAuction],["21",t.endedAuction],["156",t.active],["12",t.tracked],["412",t.bidMoves]].map(([a,b])=><div className="stat" key={b}><Bell/><span><b>{a}</b><small>{b}</small></span></div>)}<div className="bars">{[30,64,45,80,52,72,38,85,50,70,43,90,62].map((h,i)=><i key={i} style={{height:`${h}%`}}/>)}</div></div>
       <div className="soft sponsor"><div><Truck/><span><small>{t.sponsored}</small><b>{t.partner}</b></span></div><p><b>{t.transport}</b><span>{t.transportSub}</span></p><aside><span><ShieldCheck/>{t.insured}</span><span><Euro/>{t.transparent}</span><span><Timer/>{t.fast}</span></aside><button>{t.quote} <ArrowRight/></button></div>

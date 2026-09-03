@@ -1,5 +1,9 @@
 import { getSupabaseServerClient } from "@/lib/supabase/server";
-import type { Vehicle } from "@/lib/vehicles";
+import {
+  VEHICLE_PLACEHOLDER_IMAGE,
+  normalizeVehicles,
+  type Vehicle,
+} from "@/lib/vehicles";
 
 type ListingRow = {
   id: string | number;
@@ -37,23 +41,26 @@ function asString(value: unknown, fallback = "") {
   return typeof value === "string" && value.trim() ? value : fallback;
 }
 
-function asNumber(value: unknown, fallback = 0) {
+function asNumber(value: unknown) {
+  if (value === null || value === undefined || value === "") return null;
   const parsed = typeof value === "number" ? value : Number(value);
-  return Number.isFinite(parsed) ? parsed : fallback;
+  return Number.isFinite(parsed) ? parsed : null;
 }
 
 function formatEuro(value: unknown) {
-  if (value === null || value === undefined || value === "") return "—";
+  const amount = asNumber(value);
+  if (amount === null) return "—";
   return new Intl.NumberFormat("fr-FR", {
     style: "currency",
     currency: "EUR",
     maximumFractionDigits: 0,
-  }).format(asNumber(value));
+  }).format(amount);
 }
 
 function formatMileage(value: unknown) {
-  if (value === null || value === undefined || value === "") return "—";
-  return `${new Intl.NumberFormat("fr-FR").format(asNumber(value))} km`;
+  const mileage = asNumber(value);
+  if (mileage === null) return "—";
+  return `${new Intl.NumberFormat("fr-FR").format(mileage)} km`;
 }
 
 function listingId(row: ListingRow) {
@@ -87,32 +94,45 @@ function toVehicle(
     place: asString(row.location, "—"),
     price: formatEuro(latestPrice?.price),
     start: formatEuro(earliestPrice?.price),
-    score: 0,
-    gain: 0,
-    time: "--:--:--",
-    image: "/file.svg",
+    score: null,
+    gain: null,
+    time: null,
+    image: VEHICLE_PLACEHOLDER_IMAGE,
+    fuel: asString(row.fuel_type) || null,
+    transmission: null,
     sourceUrl: undefined,
   };
 }
 
-export async function listLiveVehicles(limit = 100): Promise<Vehicle[]> {
+export async function listLiveVehicles(
+  limit = 100,
+  signal?: AbortSignal,
+): Promise<Vehicle[]> {
   const supabase = getSupabaseServerClient();
-  const { data: listingRows, error: listingsError } = await supabase
+  let listingsQuery = supabase
     .from("listings")
     .select(LISTING_COLUMNS)
     .eq("status", "active")
     .limit(limit);
+
+  if (signal) listingsQuery = listingsQuery.abortSignal(signal);
+
+  const { data: listingRows, error: listingsError } = await listingsQuery;
 
   if (listingsError) throw new Error(`Supabase listings query failed: ${listingsError.message}`);
   if (!listingRows?.length) return [];
 
   const listings = listingRows as unknown as ListingRow[];
   const ids = listings.map(listingId);
-  const { data: priceRows, error: pricesError } = await supabase
+  let pricesQuery = supabase
     .from("price_history")
     .select(PRICE_HISTORY_COLUMNS)
     .in("listing_id", ids)
     .order("recorded_at", { ascending: false });
+
+  if (signal) pricesQuery = pricesQuery.abortSignal(signal);
+
+  const { data: priceRows, error: pricesError } = await pricesQuery;
 
   if (pricesError) throw new Error(`Supabase price_history query failed: ${pricesError.message}`);
 
@@ -120,10 +140,12 @@ export async function listLiveVehicles(limit = 100): Promise<Vehicle[]> {
     (priceRows ?? []) as unknown as PriceHistoryRow[],
   );
 
-  return listings.map((row) => {
-    const id = listingId(row);
-    return toVehicle(row, latest.get(id), earliest.get(id));
-  });
+  return normalizeVehicles(
+    listings.map((row) => {
+      const id = listingId(row);
+      return toVehicle(row, latest.get(id), earliest.get(id));
+    }),
+  );
 }
 
 export async function getVehicleBySlug(id: string): Promise<Vehicle | null> {
