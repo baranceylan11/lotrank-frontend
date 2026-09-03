@@ -100,7 +100,7 @@ export async function listLiveVehicles(limit = 100): Promise<Vehicle[]> {
   const { data: listingRows, error: listingsError } = await supabase
     .from("listings")
     .select(LISTING_COLUMNS)
-    .eq("status", "live")
+    .eq("status", "active")
     .limit(limit);
 
   if (listingsError) throw new Error(`Supabase listings query failed: ${listingsError.message}`);
