@@ -105,3 +105,21 @@ test("uses bounded API requests and no sample fallback", async () => {
   assert.match(route, /API_TIMEOUT_MS\s*=\s*8_000/);
   assert.match(route, /status:\s*503/);
 });
+
+test("keeps the home showcase small and the active auction list expandable", async () => {
+  const home = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
+  const sections = await readFile(
+    new URL("../app/components/section-page.tsx", import.meta.url),
+    "utf8",
+  );
+  const repository = await readFile(
+    new URL("../lib/auction-repository.ts", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(home, /shown\.slice\(0,6\)/);
+  assert.match(home, /href={`\/auctions\?lang=\$\{lang\}`}/);
+  assert.match(sections, /AUCTION_PAGE_SIZE\s*=\s*24/);
+  assert.match(sections, /shown\.slice\(0,visibleCount\)/);
+  assert.match(repository, /\.eq\("status",\s*"active"\)/);
+});
