@@ -11,7 +11,6 @@ type ListingRow = {
   location: string | null;
   status: string | null;
   category: string | null;
-  source_url: string | null;
 };
 
 type PriceHistoryRow = {
@@ -30,7 +29,6 @@ const LISTING_COLUMNS = [
   "location",
   "status",
   "category",
-  "source_url",
 ].join(",");
 
 const PRICE_HISTORY_COLUMNS = "listing_id,price,recorded_at";
@@ -93,7 +91,7 @@ function toVehicle(
     gain: 0,
     time: "--:--:--",
     image: "/file.svg",
-    sourceUrl: asString(row.source_url) || undefined,
+    sourceUrl: undefined,
   };
 }
 
