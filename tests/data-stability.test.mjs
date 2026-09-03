@@ -117,7 +117,7 @@ test("keeps the home showcase small and the active auction list expandable", asy
     "utf8",
   );
 
-  assert.match(home, /shown\.slice\(0,6\)/);
+  assert.match(home, /shown\.slice\(0,5\)/);
   assert.match(home, /href={`\/auctions\?lang=\$\{lang\}`}/);
   assert.match(sections, /AUCTION_PAGE_SIZE\s*=\s*24/);
   assert.match(sections, /shown\.slice\(0,visibleCount\)/);

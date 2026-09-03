@@ -15,9 +15,9 @@ import { Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetT
 type Lang = "fr" | "en" | "zh";
 
 const ui = {
-  fr: { auctions:"Enchères", selection:"Ma sélection", business:"Rapports Business", sources:"Sources", how:"Comment ça marche ?", login:"Connexion", all:"Toutes les enchères", search:"Rechercher", filters:"Filtres", compare:"Comparer", pricing:"Choisissez votre formule", payment:"Finaliser l’abonnement", saved:"Véhicules enregistrés", noResult:"Aucun véhicule trouvé", noAuctions:"Aucune enchère active pour le moment.", unavailable:"Les enchères sont temporairement indisponibles.", loadMore:"Charger plus" },
-  en: { auctions:"Auctions", selection:"Watchlist", business:"Business reports", sources:"Sources", how:"How it works", login:"Log in", all:"All auctions", search:"Search", filters:"Filters", compare:"Compare", pricing:"Choose your plan", payment:"Complete subscription", saved:"Saved vehicles", noResult:"No vehicle found", noAuctions:"There are no active auctions right now.", unavailable:"Auctions are temporarily unavailable.", loadMore:"Load more" },
-  zh: { auctions:"拍卖", selection:"关注列表", business:"商业报告", sources:"数据源", how:"工作原理", login:"登录", all:"全部拍卖", search:"搜索", filters:"筛选", compare:"比较", pricing:"选择方案", payment:"完成订阅", saved:"已保存车辆", noResult:"未找到车辆", noAuctions:"目前没有进行中的拍卖。", unavailable:"拍卖数据暂时不可用。", loadMore:"加载更多" },
+  fr: { auctions:"Enchères", selection:"Ma sélection", business:"Rapports Business", sources:"Sources", how:"Comment ça marche ?", login:"Se connecter", signup:"S’inscrire", all:"Toutes les enchères", search:"Rechercher", filters:"Filtres", compare:"Comparer", pricing:"Choisissez votre formule", payment:"Finaliser l’abonnement", saved:"Véhicules enregistrés", noResult:"Aucun véhicule trouvé", noAuctions:"Aucune enchère active pour le moment.", unavailable:"Les enchères sont temporairement indisponibles.", loadMore:"Charger plus" },
+  en: { auctions:"Auctions", selection:"Watchlist", business:"Business reports", sources:"Sources", how:"How it works", login:"Log in", signup:"Sign up", all:"All auctions", search:"Search", filters:"Filters", compare:"Compare", pricing:"Choose your plan", payment:"Complete subscription", saved:"Saved vehicles", noResult:"No vehicle found", noAuctions:"There are no active auctions right now.", unavailable:"Auctions are temporarily unavailable.", loadMore:"Load more" },
+  zh: { auctions:"拍卖", selection:"关注列表", business:"商业报告", sources:"数据源", how:"工作原理", login:"登录", signup:"注册", all:"全部拍卖", search:"搜索", filters:"筛选", compare:"比较", pricing:"选择方案", payment:"完成订阅", saved:"已保存车辆", noResult:"未找到车辆", noAuctions:"目前没有进行中的拍卖。", unavailable:"拍卖数据暂时不可用。", loadMore:"加载更多" },
 } as const;
 
 const AUCTION_PAGE_SIZE = 24;
@@ -35,7 +35,7 @@ function Nav({lang,active}:{lang:Lang;active?:string}){
       <Link className={active==="sources"?"active":""} href={href("/sources",lang)}>{t.sources}</Link>
       <Link className={active==="how"?"active":""} href={href("/how",lang)}>{t.how}</Link>
     </div>
-    <div className="innerActions"><label><Globe2/><select value={lang} onChange={e=>router.push(`${location.pathname}?lang=${e.target.value}`)}><option value="fr">FR</option><option value="en">EN</option><option value="zh">中文</option></select><ChevronDown/></label><Link className="lightBtn" href={href("/login",lang)}>{t.login}</Link></div>
+    <div className="innerActions"><label><Globe2/><select value={lang} onChange={e=>router.push(`${location.pathname}?lang=${e.target.value}`)}><option value="fr">FR</option><option value="en">EN</option><option value="zh">中文</option></select><ChevronDown/></label><Link className="lightBtn" href={href("/login",lang)}>{t.login}</Link><Link className="primaryBtn signupBtn" href={href("/register",lang)}>{t.signup}</Link></div>
   </div></nav>;
 }
 
