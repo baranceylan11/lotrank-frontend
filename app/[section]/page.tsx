@@ -1,7 +1,27 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { SectionPage } from "@/app/components/section-page";
 
 const sections = new Set(["auctions","selection","compare","business","sources","how","login","register","pricing","checkout","search"]);
+const sectionTitles:Record<string,string> = {
+  auctions:"Toutes les enchères",
+  selection:"Mes favoris",
+  compare:"Comparer",
+  business:"Analyses du marché",
+  sources:"Sources de données",
+  how:"Comment fonctionne LotRank ?",
+  login:"Connexion",
+  register:"Inscription",
+  pricing:"Passez à la vitesse supérieure avec LotRank Pro",
+  checkout:"Finaliser l’abonnement",
+  search:"Résultats de recherche",
+};
+
+export async function generateMetadata({params}:{params:Promise<{section:string}>}):Promise<Metadata>{
+  const {section}=await params;
+  const title=sectionTitles[section];
+  return title?{title:`${title} | LotRank`}:{};
+}
 
 export default async function DynamicSection({
   params,

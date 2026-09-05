@@ -64,7 +64,7 @@ test("normalizes missing values and removes duplicate vehicles", async () => {
 });
 
 test("keeps real analysis values and safe images", async () => {
-  const { hasVehicleScore, normalizeVehicle } = await vite.ssrLoadModule(
+  const { VEHICLE_PLACEHOLDER_IMAGE, hasVehicleScore, normalizeVehicle } = await vite.ssrLoadModule(
     "/lib/vehicles.ts",
   );
 
@@ -87,6 +87,10 @@ test("keeps real analysis values and safe images", async () => {
   assert.equal(hasVehicleScore(vehicle.score), true);
   assert.equal(vehicle.image, "https://example.com/car.jpg");
   assert.equal(vehicle.time, "00:45:30");
+  assert.equal(
+    normalizeVehicle({ id: "listing-4", image: "http://example.com/car.jpg" }).image,
+    VEHICLE_PLACEHOLDER_IMAGE,
+  );
 });
 
 test("uses bounded API requests and no sample fallback", async () => {
