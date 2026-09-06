@@ -35,7 +35,7 @@ export default function Home(){
 
   return <main>
     <section className="hero"><SiteHeader lang={lang} active="home"/><div className="wrap heroShell">
-      <div className="heroIntro"><h1>{t.headlineA}<br/><b>{t.headlineB}</b></h1><p>{t.sub}</p>
+      <div className="heroIntro"><h1><span>{t.headlineA} </span><b>{t.headlineB}</b></h1><p>{t.sub}</p>
         <form className="heroSearch" onSubmit={event=>{event.preventDefault();search()}}><Search/><input aria-label={t.search} value={query} onChange={event=>setQuery(event.target.value)} placeholder={t.search}/><span className="heroFilterIcon" aria-hidden="true"><Filter/></span></form>
         <div className="heroCtas"><button className="primaryBtn" onClick={()=>router.push(`/auctions?lang=${lang}`)}>{t.all}<ArrowRight/></button><button className="outlineBtn" disabled aria-disabled="true"><CarFront/>{t.vin}</button></div>
         <div className="heroPopular"><span>{t.popular}</span>{["Tous","BMW","Mercedes","Audi","Peugeot"].map(value=><button className={brand===value?"active":""} aria-pressed={brand===value} onClick={()=>setBrand(value)} key={value}>{value==="Tous"?t.allBrands:value}</button>)}</div>
