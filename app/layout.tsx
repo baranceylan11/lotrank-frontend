@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import "./locked-pdf.css";
 
 export const metadata: Metadata = {
   referrer: "no-referrer",
@@ -28,7 +29,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 5,
   viewportFit: "cover",
-  themeColor: "#313b40",
+  themeColor: "#3D474C",
 };
 
 export default function RootLayout({
