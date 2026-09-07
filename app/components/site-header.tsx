@@ -8,14 +8,14 @@ import { BarChart3, ChevronDown, Globe2, Menu, X } from "lucide-react";
 export type SiteLang = "fr" | "en" | "zh";
 
 const labels = {
-  fr: { home:"Accueil", auctions:"Toutes les enchères", business:"Analyses", selection:"Favoris", login:"Se connecter", signup:"S’inscrire" },
-  en: { home:"Home", auctions:"All auctions", business:"Analysis", selection:"Favorites", login:"Log in", signup:"Sign up" },
-  zh: { home:"首页", auctions:"全部拍卖", business:"分析", selection:"收藏", login:"登录", signup:"注册" },
+  fr: { home:"Accueil", auctions:"Enchères", business:"Analyses", selection:"Favoris", how:"Comment ça marche ?", pricing:"Tarifs", login:"Se connecter", signup:"S’inscrire" },
+  en: { home:"Home", auctions:"Auctions", business:"Analysis", selection:"Favorites", how:"How it works", pricing:"Pricing", login:"Log in", signup:"Sign up" },
+  zh: { home:"首页", auctions:"拍卖", business:"分析", selection:"收藏", how:"工作原理", pricing:"价格", login:"登录", signup:"注册" },
 } as const;
 
 const route = (path:string,lang:SiteLang) => `${path}?lang=${lang}`;
 
-export function SiteHeader({lang,active,onLanguageChange}:{lang:SiteLang;active?:"home"|"auctions"|"selection"|"business";onLanguageChange?:(lang:SiteLang)=>void}){
+export function SiteHeader({lang,active,onLanguageChange}:{lang:SiteLang;active?:"home"|"auctions"|"selection"|"business"|"how"|"pricing";onLanguageChange?:(lang:SiteLang)=>void}){
   const router=useRouter();
   const t=labels[lang];
   const [menuOpen,setMenuOpen]=useState(false);
@@ -44,6 +44,8 @@ export function SiteHeader({lang,active,onLanguageChange}:{lang:SiteLang;active?
     <Link onClick={()=>setMenuOpen(false)} className={active==="auctions"?"active":""} aria-current={active==="auctions"?"page":undefined} href={route("/auctions",lang)}>{t.auctions}</Link>
     <Link onClick={()=>setMenuOpen(false)} className={active==="business"?"active":""} aria-current={active==="business"?"page":undefined} href={route("/business",lang)}>{t.business}</Link>
     <Link onClick={()=>setMenuOpen(false)} className={active==="selection"?"active":""} aria-current={active==="selection"?"page":undefined} href={route("/selection",lang)}>{t.selection}</Link>
+    <Link onClick={()=>setMenuOpen(false)} className={active==="how"?"active":""} aria-current={active==="how"?"page":undefined} href={route("/how",lang)}>{t.how}</Link>
+    <Link onClick={()=>setMenuOpen(false)} className={active==="pricing"?"active":""} aria-current={active==="pricing"?"page":undefined} href={route("/pricing",lang)}>{t.pricing}</Link>
   </nav>;
 
   return <header className="siteHeader"><div className="siteHeaderInner">
@@ -68,6 +70,6 @@ export function SiteFooter({lang}:{lang?:SiteLang}){
     <section><b>Plateforme</b><Link href={route("/auctions",footerLang)}>Toutes les enchères</Link><Link href={route("/business",footerLang)}>Analyse du marché</Link><Link href={route("/selection",footerLang)}>Favoris</Link><Link href={route("/how",footerLang)}>Méthodologie</Link></section>
     <section><b>Ressources</b><span aria-disabled="true">FAQ</span><Link href={route("/sources",footerLang)}>Guides</Link><span aria-disabled="true">Blog</span><span aria-disabled="true">Contact</span></section>
     <section><b>Légal</b><span>Conditions d’utilisation</span><span>Politique de confidentialité</span><span>Mentions légales</span></section>
-    <section className="footerTrust"><b>Sources et partenaires</b><p>Les sources disponibles sont indiquées sur chaque annonce active.</p></section>
+    <section className="footerTrust"><b>Sources officielles</b><p>LotRank analyse des annonces publiées par des sources officielles clairement identifiées. Leur présence ne constitue ni un partenariat ni une recommandation.</p></section>
   </div></footer>;
 }
